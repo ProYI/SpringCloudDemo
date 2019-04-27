@@ -1,0 +1,12 @@
+eureka:
+  client:
+    service-url:
+      defaulZone: http://localhost:8761/eureka/
+    # 因为它本来就是注册中心，不想显示在注册中心的管理列表中
+    register-with-eureka: false
+  server:
+    # 是否开启上线率低的警报，默认时true 开发环境可以设置为false
+    enable-self-preservation: false
+spring:
+  application:
+    name: eureka server
