@@ -1,7 +1,34 @@
 spring:
   application:
+    # 本模块在eureka上的名字
     name: Product
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        # config在eureka上注册的服务名
+        service-id: CONFIG
+      # 使用的配置环境
+      profile: dev
+    stream:
+      bindings:
+        # 监听的队列
+        myMessage:
+          # 分组监听
+          group: product
+          # 传递时在RabbitMQ web监控界面可以看到序列话的Java对象
+          content-type: application/json
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+# 需要访问的服务名称（Product模块访问User模块）
+USER:
+  Ribbon:
+    # 规则名称（必须写完整的包路径名称 默认为轮询 下面需改为随机 可以在interface IRule接口按住 ctrl + alt + 左键IRule查看几种实现规则）
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

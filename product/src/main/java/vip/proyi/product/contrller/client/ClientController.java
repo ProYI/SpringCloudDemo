@@ -22,6 +22,20 @@ public class ClientController {
     private LoadBalancerClient loadBalancerClient;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private UserClient userClient;
+
+    /**
+     * 使用Feign来调用User服务msg接口
+     * @return
+     */
+    @GetMapping("/userMsg4")
+    public String userMsg4() {
+        String response = userClient.queryUserMsg();
+
+        log.info("response={}", response);
+        return response;
+    }
 
     @GetMapping("/userMsg3")
     public String userMsg3() {
