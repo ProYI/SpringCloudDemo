@@ -18,4 +18,9 @@ public class SendMessageController {
         String message = "Spring Cloud Stream test Message, now " + new Date();
         streamClient.output().send(MessageBuilder.withPayload(message).build());
     }
+
+    @GetMapping("/testrout")
+    public String testRoutAPI() {
+        return "Zuul RoutingAPITest, now " + new Date();
+    }
 }

@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        # config在eureka上注册的服务名
+        service-id: CONFIG
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+zuul:
+  routes:
+    # 自定义的路由名称
+    myProduct:
+      path: /myProduct/**
+      # 路由到哪个服务上去
+      serviceId: product
+    # 如果只配置路由 简写 服务名：路由地址
+#    product: /myProduct/**
+  # 禁止路由地址 避免外部访问
+  ignored-patterns:
+    # 配置一个Set 多个地址,如果配置了自定义路由，原地址和路由地址都得禁止
+#    - /product/testrout
+#    - /myProduct/testrout
+    # 使用通配符简化地址
+#    - /**/testrout
