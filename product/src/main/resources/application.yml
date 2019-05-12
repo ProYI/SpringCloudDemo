@@ -32,3 +32,24 @@ USER:
   Ribbon:
     # 规则名称（必须写完整的包路径名称 默认为轮询 下面需改为随机 可以在interface IRule接口按住 ctrl + alt + 左键IRule查看几种实现规则）
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 超时设置
+            timeoutInMilliseconds: 2000
+    # 为getHystrixTest这个方法单独设置超时时间， 与default同级
+    getHystrixTest:
+      execution:
+        isolation:
+          thread:
+            # 超时设置
+            timeoutInMilliseconds: 3000
+#暴露全部的监控信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -1,5 +1,7 @@
 package vip.proyi.product.contrller.client;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -29,12 +31,30 @@ public class ClientController {
      * 使用Feign来调用User服务msg接口
      * @return
      */
+    // 设置处理方法
+//    @HystrixCommand(fallbackMethod = "fallbackmethod")
+    // 设置超时时间
+//    @HystrixCommand(commandProperties = {
+//            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")
+//    })
+    // 服务熔断
+//    @HystrixCommand(commandProperties = {
+//            // 设置熔断  circuitBreaker断路器
+//            @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),
+//            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+//            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+//            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60"),
+//    })
+    @HystrixCommand
     @GetMapping("/userMsg4")
     public String userMsg4() {
         String response = userClient.queryUserMsg();
 
         log.info("response={}", response);
         return response;
+    }
+    private String fallbackmethod() {
+        return "test: 接口出现问题，请稍后再试";
     }
 
     @GetMapping("/userMsg3")
